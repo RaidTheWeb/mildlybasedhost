@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>MildlyBasedHost</title>
+    </head>
+    <body>
+        <pre>
+MILDLY BASED HOST
+=================
+
+Literally just a file host I made because discord cdn ew.
+Runs on a NodeJS environment, this page is dynamically updated.
+
+Send HTTP POST requests via cURL of another tool to upload files. (Max is 64MB)
+    curl -F file=@filename.png https://mbh.rtwcodes.tech
+
+
+TERMS OF SERVICE
+----------------
+
+Please don't use mbh for:
+    * NSFW content (pornography, gore, etc.)
+    * Botnets
+    * Piracy
+    * Backups
+
+FILE RETENTION PERIOD
+---------------------
+
+retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
+
+   days
+    30  |  \
+        |   \
+        |    \
+        |     \
+        |      \
+        |       \
+        |        ..
+        |          \
+    15  | ----------..-------------------------------------------
+        |             ..
+        |               \
+        |                ..
+        |                  ...
+        |                     ..
+        |                       ...
+        |                          ....
+        |                              ......
+     2  |                                    ....................
+          0                        32                          64
+                                                              MiB
+
+NOTES
+-----
+
+A small python script I made that takes a screenshot of a region you select, uploads the screenshot, and copies the url to your clipboard for use.
+
+#!/bin/python3
+
+import os
+import string
+import random
+import subprocess
+import pyperclip
+
+tempname = ''.join([random.choice(string.ascii_letters
+    + string.digits) for n in range(8)]) + '.png'
+
+os.system(f'xfce4-screenshooter -r --save {tempname}')
+url = subprocess.run(f'curl -Ffile=@{tempname} https://mbh.rtwcodes.tech'.split(' '), capture_output=True, text=True)
+os.system(f'rm -r {tempname}')
+pyperclip.copy(url.stdout)
+            
+Inspired by <a href="http://0x0.st">http://0x0.st</a>
+        </pre>
+    </body>
+</html>
